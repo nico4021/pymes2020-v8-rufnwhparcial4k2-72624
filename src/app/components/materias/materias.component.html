@@ -1,5 +1,8 @@
+<div class="container align col-md-12 ">
+<button type="button" class="btn btn-warning" (click)="Agregar()">CARGAR MATERIA  </button>
+</div>
 <h3>Tabla de Materias</h3>
-<div id="divTablaResultados" *ngIf="AccionABMC == 'L' && Lista?.length > 0">
+<div id="divTablaResultados" *ngIf="AccionABMC == 'L' && ListaMaterias?.length > 0">
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
@@ -9,42 +12,57 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let dto of ListaMaterias">
-				<td>{{dto.IdMateria | uppercase}}</td>
-        <td class="text-right">{{dto.Precio | currency:'$'}}</td>
-				<td class="text-right">{{dto.Stock}}</td>
-				<td>{{dto.FechaAlta| date:'dd/MM/yyyy'}}</td>
-				<td>{{GetArticuloFamiliaNombre(dto.IdArticuloFamilia)}}</td>
-				<td>{{dto.Activo ? 'SI' : 'NO'}}</td>
-				<td class="text-center text-nowrap">
-					<button type="button" class="btn btn-sm btn-outline-primary" title="Ver" (click)="Consultar(dto)">
-                    <span class="fas fa-eye"></span>
-                </button>
-					<button type="button" class="btn btn-sm btn-outline-primary" title="Modificar" (click)="Modificar(dto)">
-                    <span class="fas fa-pencil-alt"></span>
-                </button>
-					<button type="button" class="btn btn-sm btn-outline-{{ dto.Activo ? 'danger':'success'}}"
-                    title="{{dto.Activo ? 'Desactivar':'Activar'}}" (click)="ActivarDesactivar(dto)">
-                    <span class="fas fa-{{dto.Activo ? 'times':'check'}}"></span>
-                </button>
-				</td>
+			<tr *ngFor="let materia of ListaMaterias">
+				<td>{{materia.IdMateria}}</td>
+        <td class="text-right">{{materia.MateriaAnio}}</td>
+				<td class="text-right">{{materia.MateriaNombre}}</td>
 			</tr>
 		</tbody>
 	</table>
-	<!-- Paginador-->
-	<div id="divPaginador" class="col-sm-12">
-		<div class="row bg-light">
-			<div class="col-sm-3">
-				<span class="label label-default font-weight-bold">Registros: {{RegistrosTotal}}</span>
-			</div>
-			<div class="col-sm-6 text-center">
-				<ngb-pagination [(page)]="Pagina" (pageChange)="Buscar()" [pageSize]="10" [maxSize]="10"
-					[collectionSize]="RegistrosTotal"></ngb-pagination>
-			</div>
-			<div class="col-sm-3 text-right">
-				<button type="button" class="btn btn-primary" (click)="ImprimirListado()"><span class="fas fa-print"></span>
-                    Imprimir</button>
+</div>
+
+<form name="FormReg" [formGroup]='FormReg' *ngIf="AccionABMC != 'L'" class="bg-light">
+
+	<fieldset [disabled]="AccionABMC==='C'">
+		<!--campo nombre-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="Nombre">Nombre <span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
 			</div>
 		</div>
+
+		<!--campo precio-->
+		<div class="row form-group">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="MateriaAnio">Año Materia<span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input type="text" name="MateriaAnio" class="form-control" formControlName="MateriaAnio" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2">Nombre Materia <span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input class="form-control" name="FechaAlta" formControlName="MateriaNombre" />
+			</div>
+		</div>
+	</fieldset>
+
+	<!-- Botones Grabar, Cancelar/Volver' -->
+	<div class="row justify-content-center">
+		<button type="button" class="btn btn-primary" (click)="Grabar()">
+            <span class="fas fa-check"></span> Guardar
+        </button>
+		&nbsp;
+		<button type="button" class="btn btn-warning" (click)="Volver()">
+            <span class="fas fa-undo"></span> {{AccionABMC=='C' ? 'Volver' : 'Cancelar'}}
+        </button>
 	</div>
-</div>
+
+	<!--texto: Revisar los datos ingresados...-->
+	<div id="divMsjFormRegistro" *ngIf="submitted && FormReg.invalid" class="row alert alert-danger">
+		<span class="fas fa-exclamation-sign"></span>{{Mensajes['RD']}}
+	</div>
+
+</form>

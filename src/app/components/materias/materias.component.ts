@@ -12,12 +12,15 @@ export class MateriasComponent implements OnInit {
   SinBusquedasRealizadas:boolean = true;
   ListaMaterias: Materia[] = [];
   AccionABMC = "L";
+  FormFiltro: FormGroup;
+  FormReg: FormGroup;
+  submitted = false;
   constructor(
     public formBuilder: FormBuilder,
     private materiasService: MateriasService,
-  ) {
+  ) { }
 
-   }
+
   getAllMaterias(){
     this.SinBusquedasRealizadas = false;
     this.materiasService
@@ -28,6 +31,22 @@ export class MateriasComponent implements OnInit {
   }
   ngOnInit() {
     this.getAllMaterias();
-  }
-
+  } 
+  Grabar() {
+    this.AccionABMC = "L";
+    const itemCopy = { ...this.FormReg.value };
+    itemCopy["IdMateria"] = null;
+     if (this.FormReg.invalid) {
+      return;
+    }
+      this.materiasService.post(itemCopy).subscribe((res: any) => {
+        this.Volver();
+      });
+    }
+    Volver(){
+      this.AccionABMC="L"
+    }
+    Agregar(){
+      this.AccionABMC="A"
+    }
 }

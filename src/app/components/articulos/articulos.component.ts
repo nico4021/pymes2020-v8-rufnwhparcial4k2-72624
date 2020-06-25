@@ -146,7 +146,6 @@ export class ArticulosComponent implements OnInit {
     this.BuscarPorId(Dto, "M");
   }
 
-  // grabar tanto altas como modificaciones
   Grabar() {
     this.submitted = true;
     // verificar que los validadores esten OK
