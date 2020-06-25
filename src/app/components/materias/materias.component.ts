@@ -41,10 +41,12 @@ export class MateriasComponent implements OnInit {
     this.AccionABMC = "L";
     const itemCopy = { ...this.FormReg.value };
      if (this.FormReg.invalid) {
+      console.log("FORM IS INVALID");
       return;
     }
       this.materiasService.post(itemCopy).subscribe((res: any) => {
         this.Volver();
+        window.alert("Cargada con exit");
       });
     }
     Volver(){
