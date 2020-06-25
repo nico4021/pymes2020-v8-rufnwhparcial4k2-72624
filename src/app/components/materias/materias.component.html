@@ -22,17 +22,6 @@
 </div>
 
 <form name="FormReg" [formGroup]='FormReg' *ngIf="AccionABMC != 'L'" class="bg-light">
-
-	<fieldset [disabled]="AccionABMC==='C'">
-		<!--campo nombre-->
-		<div class="form-group row">
-			<label class="col-form-label col-sm-2 col-sm-offset-2" for="Nombre">Nombre <span
-                    class="text-danger">*</span></label>
-			<div class="col-sm-6">
-			</div>
-		</div>
-
-		<!--campo precio-->
 		<div class="row form-group">
 			<label class="col-form-label col-sm-2 col-sm-offset-2" for="MateriaAnio">Año Materia<span
                     class="text-danger">*</span></label>
@@ -47,9 +36,7 @@
 				<input class="form-control" name="FechaAlta" formControlName="MateriaNombre" />
 			</div>
 		</div>
-	</fieldset>
 
-	<!-- Botones Grabar, Cancelar/Volver' -->
 	<div class="row justify-content-center">
 		<button type="button" class="btn btn-primary" (click)="Grabar()">
             <span class="fas fa-check"></span> Guardar
@@ -58,11 +45,6 @@
 		<button type="button" class="btn btn-warning" (click)="Volver()">
             <span class="fas fa-undo"></span> {{AccionABMC=='C' ? 'Volver' : 'Cancelar'}}
         </button>
-	</div>
-
-	<!--texto: Revisar los datos ingresados...-->
-	<div id="divMsjFormRegistro" *ngIf="submitted && FormReg.invalid" class="row alert alert-danger">
-		<span class="fas fa-exclamation-sign"></span>{{Mensajes['RD']}}
 	</div>
 
 </form>

@@ -30,12 +30,16 @@ export class MateriasComponent implements OnInit {
       });
   }
   ngOnInit() {
+    this.FormReg = this.formBuilder.group({
+      IdMateria: [0],
+      MateriaAnio: [null],
+      MateriaNombre: [""],
+    });
     this.getAllMaterias();
   } 
   Grabar() {
     this.AccionABMC = "L";
     const itemCopy = { ...this.FormReg.value };
-    itemCopy["IdMateria"] = null;
      if (this.FormReg.invalid) {
       return;
     }
